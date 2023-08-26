@@ -121,3 +121,54 @@ SELECT * FROM employees WHERE name LIKE '__r__';
 SELECT * FROM employees WHERE name LIKE 'G%a';
 
 SELECT * FROM employees WHERE deptid IS NULL;
+
+-- Joining
+
+SELECT *
+FROM employees
+    INNER JOIN department ON employees.deptid = department.deptid
+
+-- Aggregate function
+
+SELECT
+    d.name,
+    AVG(e.salary),
+    SUM(e.salary),
+    MAX(e.salary)
+FROM employees e FULL
+    JOIN department d ON e.dept = d.dept
+GROUP BY d.name
+HAVING AVG(e.salary) > 60000;
+
+SELECT
+    d.name,
+    SUM(salary),
+    AVG(salary),
+    MIN(salary),
+    COUNT(*)
+from department FULL
+    JOIN employees e ON e.dept = d.deptid
+GROUP BY d.deptid
+
+SELECT *
+FROM employees
+    LEFT JOIN department ON department.department_id = employees.department_id;
+
+SELECT *
+FROM employees
+    RIGHT JOIN department ON department.department_id = employees.department_id;
+
+SELECT *
+FROM employees FULL
+    JOIN department ON department.department_id = employees.department_id;
+
+SELECT * FROM employees CROSS JOIN department;
+
+-- Sub query
+
+SELECT
+    film_id,
+    title,
+    rental_rate
+FROM film
+WHERE rental_rate > 2.98;

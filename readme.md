@@ -180,7 +180,7 @@ Explanation: Delete course data where course_id is 1.
 
 ## Employees Table (Continued)
 
-- **Delete Course Data:**
+- **Create Employees Table (Conditional):**
   ```sql
   CREATE TABLE IF NOT EXISTS employees (
     empID SERIAL PRIMARY KEY,
@@ -230,3 +230,91 @@ Explanation: Retrieve employee with the highest salary.
   SELECT * FROM employees WHERE name LIKE 'A%';
 
 Explanation: Retrieve rows based on various filtering conditions.
+
+## Joining Tables 
+
+- **Inner Join with Explanation:**
+  ```sql
+  SELECT *
+  FROM employees
+    INNER JOIN department ON employees.deptid = department.deptid;
+
+Explanation: Retrieve all columns from both tables where the department ID matches in both tables.
+
+- **Left Join:**
+  ```sql
+  SELECT *
+  FROM employees
+  LEFT JOIN department ON department.department_id = employees.department_id;
+
+Explanation: Retrieve all rows from the left table and matching rows from the right table.
+
+- **Right Join:**
+  ```sql
+  SELECT *
+  FROM employees
+  RIGHT JOIN department ON department.department_id = employees.department_id;
+
+Explanation: Retrieve all rows from the right table and matching rows from the left table.
+
+
+- **Full Outer Join:**
+  ```sql
+  SELECT *
+  FROM employees
+  FULL JOIN department ON department.department_id = employees.department_id;
+
+Explanation: Retrieve all rows when there is a match in either the left or right table.
+
+- **Cross Join:**
+  ```sql
+  SELECT * FROM employees CROSS JOIN department;
+
+Explanation: Generate all possible combinations of rows between two tables.
+
+## Aggregate Functions
+
+Perform calculations on groups of rows and summarize data
+
+- **Aggregate Functions with Explanation:**
+  ```sql
+  SELECT
+    d.name,
+    AVG(e.salary),
+    SUM(e.salary),
+    MAX(e.salary)
+  FROM employees e
+    FULL JOIN department d ON e.dept = d.dept
+  GROUP BY d.name
+  HAVING AVG(e.salary) > 60000;
+
+Explanation: Calculate average, sum, and maximum salary for each department, filtering results using the HAVING clause.
+
+- **Aggregate Functions with GROUP BY:**
+  ```sql
+  SELECT
+    d.name,
+    SUM(salary),
+    AVG(salary),
+    MIN(salary),
+    COUNT(*)
+  FROM department d
+    FULL JOIN employees e ON e.dept = d.deptid
+  GROUP BY d.deptid;
+
+Explanation: Group and aggregate salary data by department, calculating sum, average, minimum, and count.
+
+## Subqueries
+
+Use subqueries to perform complex queries within other queries
+
+- **Aggregate Functions with GROUP BY:**
+  ```sql
+  SELECT
+    film_id,
+    title,
+    rental_rate
+  FROM film
+  WHERE rental_rate > 2.98;
+
+Explanation: Retrieve film details where the rental rate is greater than 2.98.
